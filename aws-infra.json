@@ -1,0 +1,28 @@
+{
+
+    "region": "us-east-1",
+    "security_groups": "sg-e9ce0e95",
+ 
+    "instances": {
+        "instance-001": {
+	        "ami_id": "ami-e13739f6",
+            "instance_type": "t2.micro",
+            "subnet_id":"subnet-0cbccb21",
+	    "tags": {
+	       "Name": "askcharlie-001",
+               "Role": "guestbook-001"
+            }
+        },
+        
+        "instance-002": {
+	        "ami_id": "ami-e13739f6",
+            "instance_type": "t2.micro",
+            "subnet_id":"subnet-c694b18f",
+	    "tags": {
+	       "Name": "askcharlie-002",
+               "Role": "guestbook-002"
+            }
+        }
+        
+	}
+}

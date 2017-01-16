@@ -1,0 +1,61 @@
+version: '2'
+
+services:
+
+ postgresql:
+    image: sameersbn/postgresql:9.6
+    container_name: postgresql
+
+    networks:
+      askcharlie:
+        ipv4_address: 172.25.0.10
+
+    environment:
+    - restart=always
+    - PG_PASSWORD=guestbook
+    - DB_USER=devops
+    - DB_PASS=rbdc9vtrc8
+    - DB_NAME=guestbook  
+    
+    volumes:
+    - "/srv/docker/postgresql:/var/lib/postgresql"
+    
+    ports:
+     - "5432:5432"
+    
+ redis:
+    image: redis
+    container_name: redis
+    networks:
+      askcharlie:
+        ipv4_address: 172.25.0.11
+
+    ports:
+     - "6379:6379"
+
+ web:
+    build: .
+    container_name: guestbook
+    links:
+      - postgresql
+      - redis
+
+    depends_on:
+      - postgresql
+      - redis
+
+    networks:
+      askcharlie:
+        ipv4_address: 172.25.0.9
+
+    ports:
+     - "9292:9292"
+
+networks:
+  askcharlie:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
